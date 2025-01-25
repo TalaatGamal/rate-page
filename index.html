@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talaat Gamal's rating</title>
+  <link rel="stylesheet" href="style.css">
+    <!-- send message with emailjs -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <!-- Message storage with Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://www.shutterstock.com/image-vector/icon-kindness-charity-hands-heart-260nw-458500747.jpg">
+</head>
+<body>
+  <div class="main">
+    <div class="form-div">
+      <div class="title-form-div">
+        <h2>I'm happy to work with you. Thank you !!  ❤️</h2>
+      </div>
+      <div class="message-me" id="message-me">
+
+      <form id="contactForm" class="form">
+        <div class="rate-info">
+          <h3>Stars Rate !!</h3>
+          <div class="rating" id="starRating">
+            <span data-value="1" style="color: #00d5ff;">★</span>
+            <span data-value="2">★</span>
+            <span data-value="3">★</span>
+            <span data-value="4">★</span>
+            <span data-value="5">★</span>
+          </div>
+        </div>
+        <input type="text" id="username" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <textarea id="message" rows="4" cols="50" name="message" placeholder="Your Message ( Optionally )"></textarea>
+    
+    
+        <div class="sipo">
+          <div class="thanks">
+            <h2>Sent. Thank you!🩵🥰</h2>
+          </div>
+          <div class="sircle" id="dira"></div>
+          <button type="submit" style="cursor: pointer;">Send me</button>
+        </div>
+      </form>
+
+    </div>
+    </div>
+    <div class="images">
+      <div class="animated-images">
+        <div class="backgrounds-line">
+          <div class="back-1">
+            <div class="my-logo">
+              <h2>Tal<span class="aa-color">aa</span>t Gamal</h2>
+            </div>
+          </div>
+          <div class="back-2"></div>
+          <div class="back-3">
+            <canvas id="matrix"></canvas>
+              <!-- <script>
+                  // Get the canvas element
+                  var canvas = document.getElementById('matrix');
+                  var ctx = canvas.getContext('2d');
+
+                  // Initial canvas dimensions
+                  function setCanvasDimensions() {
+                      canvas.width = window.innerWidth;
+                      canvas.height = window.innerHeight;
+                  }
+
+                  // Characters to be displayed in the matrix
+                  var characters = '01';
+
+                  // Array to store column positions
+                  var columns = [];
+
+                  // Function to update column positions based on window width
+                  function setColumns() {
+                      var numColumns = Math.floor(canvas.width / 20);  // Number of columns based on screen width
+                      columns = [];  // Clear the columns array
+                      for (var i = 0; i < numColumns; i++) {
+                          columns[i] = Math.floor(Math.random() * canvas.height);
+                      }
+                  }
+
+                  // Drawing function
+                  function draw() {
+                      // Black background to create trail effect
+                      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                      // Text color
+                      ctx.fillStyle = ' rgb(0, 204, 255)';
+
+                      // Font style and size
+                      ctx.font = '30px Arial';
+
+                      // Loop through each column
+                      for (var i = 0; i < columns.length; ++i) {
+                          // Pick a random character
+                          var text = characters.charAt(Math.floor(Math.random() * characters.length));
+
+                          // Draw the character at the current position
+                          ctx.fillText(text, i * 60, columns[i] * 40);
+
+                          // Move the position of the column down
+                          if (columns[i] * 20 > canvas.height && Math.random() > 0.975) {
+                              columns[i] = 0;
+                          }
+
+                          columns[i]++;
+                      }
+
+                      // Delay before next frame
+                      setTimeout(draw, 20); // Change the number here to increase or decrease speed
+                  }
+
+                  // Set canvas dimensions and columns initially
+                  setCanvasDimensions();
+                  setColumns();
+
+                  // Start animation
+                  draw();
+
+                  // Update canvas dimensions and columns when the window is resized
+                  window.onresize = function() {
+                      setCanvasDimensions();
+                      setColumns();
+                  };
+                </script> -->
+              
+                <script>
+                  // Get the canvas element
+                  var canvas = document.getElementById('matrix');
+                  var ctx = canvas.getContext('2d');
+              
+                  // أبعاد الـ div
+                  var containerWidth = 400;  // عرض الـ div
+                  var containerHeight = 300; // ارتفاع الـ div
+              
+                  // ضبط أبعاد canvas لتتناسب مع الـ div
+                  function setCanvasDimensions() {
+                    canvas.width = containerWidth;
+                    canvas.height = containerHeight;
+                  }
+              
+                  // Characters to be displayed in the matrix
+                  var characters = '01';
+              
+                  // Array to store column positions
+                  var columns = [];
+              
+                  // Function to update column positions based on canvas width
+                  function setColumns() {
+                    var numColumns = Math.floor(canvas.width / 10);  // عدد الأعمدة بناءً على عرض canvas
+                    columns = [];  // Clear the columns array
+                    for (var i = 0; i < numColumns; i++) {
+                      columns[i] = Math.floor(Math.random() * canvas.height);
+                    }
+                  }
+              
+                  // Drawing function
+                  function draw() {
+                    // Black background to create trail effect
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+              
+                    // Text color
+                    ctx.fillStyle = 'rgb(0, 204, 255)';
+              
+                    // Font style and size
+                    ctx.font = '20px Arial';
+              
+                    // Loop through each column
+                    for (var i = 0; i < columns.length; ++i) {
+                      // Pick a random character
+                      var text = characters.charAt(Math.floor(Math.random() * characters.length));
+              
+                      // Draw the character at the current position
+                      ctx.fillText(text, i * 20, columns[i]);
+              
+                      // Move the position of the column down
+                      if (columns[i] > canvas.height && Math.random() > 0.975) {
+                        columns[i] = 0;
+                      }
+              
+                      columns[i] += 30;
+                    }
+              
+                    // Use requestAnimationFrame for smoother animation
+                    requestAnimationFrame(draw);
+                  }
+              
+                  // Set canvas dimensions and columns initially
+                  setCanvasDimensions();
+                  setColumns();
+              
+                  // Start animation
+                  draw();
+                </script>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
