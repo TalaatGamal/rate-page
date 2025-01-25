@@ -16,9 +16,11 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url(https://images.pexels.com/photos/12871054/pexels-photo-12871054.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  /* background-image: url(https://images.pexels.com/photos/12871054/pexels-photo-12871054.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1); */
+  background-image: url(sky-stars.jpeg);
   background-position: center;
-  background-size: cover;
+  background-size: 30%;
+  background-repeat: repeat;
   background-attachment: fixed;
   color: #ffffff;
 }
