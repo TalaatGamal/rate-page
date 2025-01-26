@@ -3,130 +3,146 @@
 
 
 
-// start emailjs
-emailjs.init("3o_Ok3aG0DS4-OWJo");
-// end emailjs
 
-// start supabase
-const SUPABASE_URL = "https://lnohiidyljlwffoireap.supabase.co"; // استبدل بـ Project URL
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxub2hpaWR5bGpsd2Zmb2lyZWFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI3MTc1ODMsImV4cCI6MjA0ODI5MzU4M30.kqRqH7iWFN1Id9DyN3k7y83o0YvIRbtbZiMtPBeaQIc"; // استبدل بـ API Key
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-// end supabase
 
-// التعامل مع جميع النماذج على الصفحة
-const forms = document.querySelectorAll("form");
 
-forms.forEach((form) => {
-  const ratingField = form.querySelector("#starRating");
-  let selectedRating = 0;
 
-  // إذا كان النموذج يحتوي على تقييم النجوم، أضف أحداث التفاعل معه
-  if (ratingField) {
-    const stars = ratingField.querySelectorAll("span");
+// Initialize EmailJS
+emailjs.init("3o_Ok3aG0DS4-OWJo"); // استبدل بـ EmailJS User ID الخاص بك
 
-    // إضافة الحدث عند الضغط على النجوم
-    stars.forEach((star) => {
-      star.addEventListener("click", () => {
-        selectedRating = star.getAttribute("data-value");
-        updateStars(stars, selectedRating);
-      });
-
-      star.addEventListener("mouseover", () => {
-        const hoverRating = star.getAttribute("data-value");
-        updateStars(stars, hoverRating); // تحديث الألوان عند التمرير
-      });
-
-      star.addEventListener("mouseout", () => {
-        updateStars(stars, selectedRating); // إعادة التلوين إلى التقييم المختار
-      });
-    });
-
-    // تحديث ألوان النجوم
-    function updateStars(stars, rating) {
-      stars.forEach((star) => {
-        if (parseInt(star.getAttribute("data-value"), 6) <= parseInt(rating, 6)) {
-          star.style.color = "#00d5ff"; // اللون الأزرق عند الاختيار
-        } else {
-          star.style.color = "#ccc"; // لون رمادي عند عدم الاختيار
-        }
-      });
+// تعريف دالة updateStars في نطاق عام
+const updateStars = (value) => {
+    const starsPreview = document.getElementById("starsPreview");
+    if (starsPreview) {
+        const stars = starsPreview.querySelectorAll("span");
+        stars.forEach((star, index) => {
+            star.style.color = index < value ? "#00ffc3" : "#ccc";
+        });
     }
-  }
+};
 
-  // إضافة حدث الإرسال للنموذج
-  form.addEventListener("submit", async function (e) {
+// دالة للحصول على الوقت بتوقيت القاهرة بصيغة 12 ساعة
+const getCairoTime = () => {
+    const options = {
+        timeZone: 'Africa/Cairo', // توقيت القاهرة
+        hour12: true, // استخدام صيغة 12 ساعة
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+    };
+    const formatter = new Intl.DateTimeFormat('ar-EG', options); // تنسيق الوقت بتوقيت القاهرة
+    return formatter.format(new Date());
+};
+
+// Handle the form submission
+document.getElementById("contactForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // استخراج بيانات الحقول المشتركة
-    const usernameField = form.querySelector("#username");
-    const emailField = form.querySelector("#email");
-    const messageField = form.querySelector("#message");
+    // Form elements
+    const serviceName = document.getElementById("serviceName");
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const message = document.getElementById("message");
+    const ratingInput = document.getElementById("ratingInput");
+    const loader = document.getElementById("dira");
+    const thanks = document.querySelector(".thanks");
 
-    if (!usernameField || !emailField || !messageField) {
-      alert("بعض الحقول المطلوبة غير موجودة في النموذج! تأكد من صحة الحقول.");
-      return;
-    }
-
-    const data = {
-      username: usernameField.value,
-      email: emailField.value,
-      message: messageField.value,
-      timestamp: new Date().toISOString(), // تخزين الوقت بصيغة ISO
+    // Prepare form data
+    const formData = {
+        service_name: serviceName.value.trim(), // اسم الخدمة
+        username: username.value.trim(), // الاسم
+        email: email.value.trim(), // الإيميل
+        message: message.value.trim(), // الرسالة
+        rating: parseInt(ratingInput.value.trim()), // التقييم
+        timestamp: getCairoTime() // الوقت بتوقيت القاهرة بصيغة 12 ساعة
     };
 
-    // إذا كان التقييم موجودًا، أضفه إلى البيانات
-    if (ratingField) {
-      if (!selectedRating) {
-        alert("يرجى اختيار تقييم النجوم!");
+    console.log("Form Data:", formData); // تصحيح: عرض البيانات في الكونسول
+
+    // Validate required fields
+    if (!formData.service_name || !formData.username || !formData.email || !formData.rating || !formData.message) {
+        alert("Please fill in all required fields!");
         return;
-      }
-      data.rating = selectedRating;
     }
 
-    // التحقق من صحة البيانات
-    if (!data.username || !data.email || !data.message) {
-      alert("يرجى تعبئة جميع الحقول!");
-      return;
+    // Validate rating
+    if (formData.rating < 1 || formData.rating > 5) {
+        alert("Rating must be between 1 and 5!");
+        ratingInput.focus();
+        return;
     }
 
-    // إظهار مؤشر التحميل الخاص بالنموذج الحالي
-    const loader = form.querySelector(".sircle");
+    // Show loading indicator
     if (loader) loader.style.display = "block";
 
     try {
-      // حفظ البيانات في Supabase
-      const { error } = await supabase.from("messages").insert([data]);
-      if (error) throw error;
+        // Send email via EmailJS
+        const response = await emailjs.send(
+            "rate-service", // استبدل بـ Service ID الخاص بك
+            "template_nav13vb", // استبدل بـ Template ID الخاص بك
+            formData
+        );
 
-      // إرسال البيانات عبر EmailJS
-      await emailjs.send("service_jmd86we", "template_c7pd0tv", data);
+        console.log("EmailJS Response:", response); // تصحيح: عرض استجابة EmailJS
 
-      // alert("تم إرسال رسالتك بنجاح!");
-      form.reset(); // إعادة تعيين النموذج
+        // Reset form
+        document.getElementById("contactForm").reset();
+        updateStars(1); // إعادة تعيين النجوم إلى الحالة الافتراضية
 
-      document.querySelector(".thanks").style.display = "block"; 
-      document.querySelector(".thanksa").style.display = "block"; 
-      setTimeout(function() {
-          document.querySelector(".thanks").style.display = "none"; 
-          document.querySelector(".thanksa").style.display = "none"; 
-      }, 10000);
-
-      
-      // إعادة تعيين التقييم إذا كان موجودًا
-      if (ratingField) {
-        const stars = ratingField.querySelectorAll("span");
-        updateStars(stars, 0);
-        selectedRating = 0;
-      }
-    } 
-    // catch (err) {
-    //   console.error("خطأ أثناء معالجة النموذج:", err);
-    //   alert("حدث خطأ أثناء معالجة النموذج!");
-    // } 
-    finally {
-      // إخفاء مؤشر التحميل
-      if (loader) loader.style.display = "none";
+        // Show success message
+        if (thanks) {
+            thanks.style.display = "block";
+            setTimeout(() => {
+                thanks.style.display = "none";
+            }, 10000); // إخفاء الرسالة بعد 10 ثوانٍ
+        }
+    } catch (error) {
+        console.error("Submission error:", error); // تصحيح: عرض الخطأ بالتفصيل
+        alert("Error submitting form! Please try again.");
+    } finally {
+        // Hide loading indicator
+        if (loader) loader.style.display = "none";
     }
-  });
 });
 
+// Star rating handling
+const ratingInput = document.getElementById("ratingInput");
+const starsPreview = document.getElementById("starsPreview");
+let currentRating = 1;
+
+if (ratingInput && starsPreview) {
+    const stars = starsPreview.querySelectorAll("span");
+
+    // Input validation
+    const validateRating = (value) => {
+        if (isNaN(value)) return 1;
+        return Math.min(5, Math.max(1, value));
+    };
+
+    // Input event handling
+    ratingInput.addEventListener("input", (e) => {
+        let value = parseInt(e.target.value);
+
+        if (isNaN(value)) {
+            currentRating = 1;
+            updateStars(0);
+            return;
+        }
+
+        currentRating = validateRating(value);
+        e.target.value = currentRating;
+        updateStars(currentRating);
+    });
+
+    // Blur event handling
+    ratingInput.addEventListener("blur", () => {
+        if (ratingInput.value === "" || isNaN(ratingInput.value)) {
+            currentRating = 1;
+            ratingInput.value = currentRating;
+            updateStars(currentRating);
+        }
+    });
+
+    // Initial setup
+    updateStars(1);
+}
