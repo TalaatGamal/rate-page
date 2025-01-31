@@ -53,7 +53,7 @@ body{
   /* border: #ffffff solid 2px; */
   border: none;
   /* border-left: #ffffff solid 8px; */
-  border-bottom: #00ffc3 solid 4px;
+  border-bottom: #007f88 solid 4px;
   border-radius: 10px;
 
   padding-left: 20px;
@@ -69,7 +69,7 @@ body{
 }
 .form input::placeholder{
   font-size: 17px;
-  color: #838383;
+  color: #5c5c5c;
 }
 .form #message{
   height: 100%;
@@ -81,7 +81,7 @@ body{
   /* border: #ffffff solid 2px; */
   border: none;
   /* border-left: #ffffff solid 8px; */
-  border-bottom: #00aa83 solid 4px;
+  border-bottom: #007f88 solid 4px;
   border-radius: 20px;
 
   outline: none;
@@ -95,7 +95,7 @@ body{
 }
 .form #message::placeholder{
   /* text-align: center;  */
-  color: #838383;
+  color: #5c5c5c;
 }
 .sipo{
   width: 100%;
@@ -108,12 +108,12 @@ body{
 }
 .sipo button{
   height: 40px;
-  width: 120px;
-  background-color:  #aaffeb;
+  width: 100px;
+  background-color: #005f667e;
   border: none;
-  border-bottom:  #2f8a75 solid 6px;
-  border-radius: 7px;
-  color: #4b4b4b;
+  border-bottom:  #00acb8 solid 6px;
+  border-radius: 6px;
+  color: #ffffff;
   font-family: "cairo", serif;
   font-optical-sizing: auto;
   font-weight: 650;
@@ -205,12 +205,12 @@ body{
   padding: 10px;
   height: 100px;
   /* padding-left: 50px; */
-  background-color: #3ca88fd6;
+  background-color: #005f667e;
   border-left: #75e6ff solid 8px;
   display: flex;
   align-items: center;
   justify-content: left;
-  border-radius: 10px;
+  border-radius: 7px;
 }
 .rate-info{
   display: flex;
@@ -263,7 +263,7 @@ body{
   font-style: normal;
 }
 .logo-screen span{
-  color: #00ffbb;
+  color: #00cddb;
 }
 .logo-screen2{
   width: 100%;
@@ -282,7 +282,7 @@ body{
   font-style: normal;
 }
 .logo-screen2 span{
-  color: #00ffbb;
+  color: #00cddb;
 }
 #se2{
   display: none;

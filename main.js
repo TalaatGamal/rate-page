@@ -16,7 +16,7 @@ const updateStars = (value) => {
     if (starsPreview) {
         const stars = starsPreview.querySelectorAll("span");
         stars.forEach((star, index) => {
-            star.style.color = index < value ? "#00ffc3" : "#ccc";
+            star.style.color = index < value ? "#00c5d3" : "#ccc";
         });
     }
 };
@@ -146,3 +146,4 @@ if (ratingInput && starsPreview) {
     // Initial setup
     updateStars(1);
 }
+
